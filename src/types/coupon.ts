@@ -31,3 +31,5 @@ export interface Coupon {
     discountAmount: number;
     finalAmount: number;
   }
+
+  

@@ -4,7 +4,6 @@ import { LogOut, Menu, Home, Tag, FileText, Users } from 'lucide-react';
 import { useAuth } from '../../store/auth';
 import { Button } from '../ui/button';
 
-
 const navigation = [
   { name: 'Dashboard', path: '/admin', icon: Home },
   { name: 'Coupons', path: '/admin/coupons', icon: Tag },
@@ -16,7 +15,7 @@ export const AdminLayout = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -24,72 +23,74 @@ export const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div 
+      <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between h-16 px-4 border-b">
-          <h1 className="text-xl font-bold">Admin Panel</h1>
+        <div className="flex items-center justify-between px-4 py-3 bg-gray-900">
+          <h1 className="text-xl font-bold text-white">Admin</h1>
           <Button 
             variant="ghost" 
             size="icon" 
+            className="text-white hover:bg-gray-800"
             onClick={() => setSidebarOpen(false)}
           >
             <Menu className="h-6 w-6" />
           </Button>
         </div>
 
-        <div className="p-4">
-          <div className="mb-4 px-2 py-1.5 text-sm text-gray-500">
-            Logged in as: {user?.username}
-          </div>
-          
-          <nav className="space-y-1">
-            {navigation.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-              
-              return (
-                <Button
-                  key={item.path}
-                  variant={isActive ? "secondary" : "ghost"}
-                  className="w-full justify-start"
-                  onClick={() => navigate(item.path)}
-                >
-                  <Icon className="mr-2 h-4 w-4" />
-                  {item.name}
-                </Button>
-              );
-            })}
-          </nav>
+        <nav className="mt-8 px-4 space-y-2">
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <Button
+                key={item.path}
+                variant={isActive ? "default" : "ghost"}
+                className={`w-full justify-start ${
+                  isActive ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                }`}
+                onClick={() => {
+                  navigate(item.path);
+                  setSidebarOpen(false);
+                }}
+              >
+                <Icon className="mr-2 h-5 w-5" />
+                {item.name}
+              </Button>
+            );
+          })}
+        </nav>
+
+        <div className="absolute bottom-0 w-full px-4 py-3 border-t">
+          <Button 
+            variant="ghost"
+            className="w-full justify-start text-gray-600 hover:text-gray-900"
+            onClick={handleLogout}
+          >
+            <LogOut className="mr-2 h-5 w-5" />
+            Logout
+          </Button>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className={`transition-margin duration-200 ease-in-out ${
-        sidebarOpen ? 'ml-64' : 'ml-0'
-      }`}>
-        <header className="bg-white shadow-sm">
-          <div className="flex items-center justify-between h-16 px-4">
-            {!sidebarOpen && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => setSidebarOpen(true)}
-              >
-                <Menu className="h-6 w-6" />
-              </Button>
-            )}
-            
-            <div className="ml-auto">
-              <Button variant="ghost" onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            </div>
+      <div className="flex-1 ml-64">
+        <header className="flex items-center h-16 px-6 bg-white shadow-sm">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="lg:hidden"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+          <div className="flex-1 text-right">
+            <span className="font-medium text-gray-700">{user?.username}</span>
           </div>
         </header>
 
