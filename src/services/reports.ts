@@ -1,7 +1,7 @@
 import { withDelay } from "../lib/react-query";
 import { CouponAnalytics, CouponUsage, DailyReport } from "../types/report";
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.API_URL || 'http://localhost:3001';
 
 
 export const reportService = {

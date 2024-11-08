@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { withDelay } from '../lib/react-query';
 import { Coupon } from '../types/coupon';
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.API_URL || 'http://localhost:3001';
 interface ValidationResult {
   isValid: boolean;
   coupon?: Coupon;

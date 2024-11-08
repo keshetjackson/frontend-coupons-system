@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { LogOut, Menu, Home, Tag, FileText, Users } from 'lucide-react';
 import { useAuth } from '../../store/auth';
+import { Button } from '../ui/button';
 
 
 const navigation = [

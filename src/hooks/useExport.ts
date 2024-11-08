@@ -5,7 +5,7 @@ interface ExportParams {
   endDate: string;
 }
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.API_URL || 'http://localhost:3001';
 // Helper function to trigger file download
 const downloadFile = (blob: Blob, filename: string) => {
   const url = window.URL.createObjectURL(blob);

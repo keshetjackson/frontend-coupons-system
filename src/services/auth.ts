@@ -1,7 +1,7 @@
 import { withDelay } from "../lib/react-query";
 import { LoginInput, User } from "../types/auth";
 
-const API_URL = process.env.API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.API_URL || 'http://localhost:3001';
 
 export const authService = {
 

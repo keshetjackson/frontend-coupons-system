@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { lazy, Suspense, useEffect } from 'react';
 import { useAuth } from './store/auth';
 import { ProtectedRoute } from './components/auth/protected-route';
+import { AdminLayout } from './components/layouts/admin-layout';
+import LoginPage from './pages/login';
 
 // Lazy load admin pages for better performance
 const DashboardPage = lazy(() => import('./pages/admin/dashboard'));
@@ -46,3 +48,4 @@ export function App() {
     </Router>
   );
 }
+export default App;
