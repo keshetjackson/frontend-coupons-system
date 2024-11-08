@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { authService } from '../src/services/auth';
-import { LoginInput, User } from '../src/types/auth';
+import { authService } from '../services/auth';
+import { LoginInput, User } from '../types/auth';
 
 
 interface AuthState {
@@ -74,7 +74,6 @@ export const useAuthStore = create<AuthStore>()(
   )
 );
 
-// Selector hooks
 export const useAuth = () => {
   const store = useAuthStore();
   return {

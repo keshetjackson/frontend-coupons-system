@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { lazy, Suspense, useEffect } from 'react';
+import { useAuth } from './store/auth';
+import { ProtectedRoute } from './components/auth/protected-route';
+
+// Lazy load admin pages for better performance
+const DashboardPage = lazy(() => import('./pages/admin/dashboard'));
+const CouponsPage = lazy(() => import('./pages/admin/coupons'));
+const ReportsPage = lazy(() => import('./pages/admin/reports'));
+const UsersPage = lazy(() => import('./pages/admin/users'));
+
+export function App() {
+  const { checkAuth } = useAuth();
+
+  // Check auth status when app loads
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<LoginPage />} />
 
-export default App
+          {/* Protected admin routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/admin" element={<DashboardPage />} />
+              <Route path="/admin/coupons" element={<CouponsPage />} />
+              <Route path="/admin/reports" element={<ReportsPage />} />
+              <Route path="/admin/users" element={<UsersPage />} />
+            </Route>
+          </Route>
+
+          {/* Redirect root to admin dashboard if authenticated, otherwise to login */}
+          <Route path="/" element={<Navigate to="/admin" replace />} />
+          
+          {/* Catch all route */}
+          <Route path="*" element={<Navigate to="/admin" replace />} />
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+}
