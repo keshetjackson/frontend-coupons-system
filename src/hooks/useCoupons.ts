@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CouponInput, couponService } from '../services/coupons';
+import { couponService } from '../services/coupons';
+import { CouponInput } from '../types/coupon';
 
 export function useCoupons() {
   const queryClient = useQueryClient();

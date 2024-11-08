@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Coupon } from '../services/coupons';
 import { couponUsageService } from '../services/couponUsage';
+import { Coupon } from '../types/coupon';
 
 
 export function useCouponUsage() {

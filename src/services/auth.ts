@@ -1,19 +1,10 @@
 import { withDelay } from "../lib/react-query";
+import { LoginInput, User } from "../types/auth";
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
-export interface User {
-  id: string;
-  username: string;
-  isAdmin: boolean;
-  createdAt: string;
-}
-
-export interface LoginInput {
-  username: string;
-  password: string;
-}
 
 export const authService = {
+
   login: async (credentials: LoginInput) => 
     withDelay(
       fetch(`${API_URL}/users?username=${credentials.username}&password=${credentials.password}`)

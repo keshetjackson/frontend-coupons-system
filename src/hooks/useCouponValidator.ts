@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { withDelay } from '../lib/react-query';
-import type { Coupon } from '../services/coupons';
+import { Coupon } from '../types/coupon';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 interface ValidationResult {

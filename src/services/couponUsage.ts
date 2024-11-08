@@ -1,16 +1,9 @@
 import { withDelay } from '../lib/react-query';
-import type { Coupon } from './coupons';
+import { Coupon, CouponApplication } from '../types/coupon';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 
-export interface CouponApplication {
-  id: string;
-  couponId: string;
-  usedAt: string;
-  orderAmount: number;
-  discountAmount: number;
-  finalAmount: number;
-}
+
 
 export const couponUsageService = {
   apply: async (coupon: Coupon, orderAmount: number): Promise<CouponApplication> =>

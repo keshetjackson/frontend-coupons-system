@@ -1,30 +1,8 @@
 import { withDelay } from "../lib/react-query";
+import { CouponInput } from "../types/coupon";
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
-export interface Coupon {
-  id: string;
-  code: string;
-  description: string;
-  discountType: 'percentage' | 'fixed';
-  discountValue: number;
-  expiryDate?: string;
-  allowStacking: boolean;
-  usageLimit?: number;
-  currentUsage: number;
-  createdBy: string;
-  createdAt: string;
-  isActive: boolean;
-}
 
-export interface CouponInput {
-  code: string;
-  description: string;
-  discountType: 'percentage' | 'fixed';
-  discountValue: number;
-  expiryDate?: string;
-  allowStacking: boolean;
-  usageLimit?: number;
-}
 
 export const couponService = {
   getAll: () => 

@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { authService, LoginInput } from '../services/auth';
+import { authService } from '../services/auth';
+import { LoginInput } from '../types/auth';
 
 export function useAuth() {
   return {
